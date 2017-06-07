@@ -1,0 +1,5 @@
+/src/setting.json
+.vagrant
+node_modules
+.git
+.idea
