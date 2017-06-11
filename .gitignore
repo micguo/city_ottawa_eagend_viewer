@@ -1,5 +1,7 @@
 /src/setting.json
 .vagrant
 node_modules
+dist
 .git
 .idea
+src/server/setting.json
