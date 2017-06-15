@@ -13,6 +13,9 @@ app.use(bodyParser.json());
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
+app.use('/api',  express.Router().get('/', function(reg, res) {
+    res.json('Welcome');
+}));
 app.use('/api/meeting', meetingController);
 app.use('/api/crawler_receiver', crawlerReceiverController);
 
