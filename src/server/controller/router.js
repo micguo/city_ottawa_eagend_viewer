@@ -1,6 +1,7 @@
 // call the packages we need
 
 import meetingController from "./meeting";
+import crawlerReceiverController from "./crawlerReceiver";
 let express    = require('express');        // call express
 let app        = express();                 // define our app using express
 let bodyParser = require('body-parser');
@@ -13,5 +14,6 @@ app.use(bodyParser.json());
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api/meeting', meetingController);
+app.use('/api/crawler_receiver', crawlerReceiverController);
 
 export default app;
