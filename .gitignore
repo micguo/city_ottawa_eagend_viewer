@@ -2,6 +2,9 @@
 .vagrant
 node_modules
 dist
+public/app.js
 .git
 .idea
-src/server/setting.json
+.ideapublic/app.js
+src/server/model/setting.json
+src/client/setting.json

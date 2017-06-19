@@ -3,7 +3,7 @@ const webpack = require('webpack');
 let nodeExternals = require('webpack-node-externals');
 
 
-module.exports = {
+module.exports = [{
     entry: {
         app: './server.js'
     },
@@ -33,4 +33,30 @@ module.exports = {
     },
     target: 'node', // in order to ignore built-in modules like path, fs, etc.
     externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
-};
+},{
+    entry: {
+        app: './app.js'
+    },
+    output: {
+        path: path.resolve(__dirname, 'public'),
+        filename: 'app.js'
+    },
+    context: path.resolve(__dirname, './src/client'),
+    module: {
+        loaders: [
+            {
+                test: /.jsx?$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                query: {
+                    presets: ['es2015', 'react']
+                }
+            }
+        ]
+    },
+    externals: {
+        // Use external version of React
+        "react": "React",
+        "react-dom": "ReactDOM"
+    },
+}];
