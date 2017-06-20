@@ -1,0 +1,9 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #8FA592;
+}
+
+#body-content {
+    width: 90%;
+    margin: auto;
+}
