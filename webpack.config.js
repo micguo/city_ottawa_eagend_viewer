@@ -5,6 +5,71 @@ let nodeExternals = require('webpack-node-externals');
 
 module.exports = [{
     entry: {
+        app: './app.js'
+    },
+    output: {
+        path: path.resolve(__dirname, 'public'),
+        filename: 'app.js'
+    },
+    context: path.resolve(__dirname, './src/client'),
+    resolve: {
+        modules: [
+            path.join(__dirname, 'src/client'),
+            'node_modules'
+        ]
+    },
+    module: {
+        rules: [
+            {
+                test: /\.jsx?$/,
+                use: [{
+                    loader: 'react-hot-loader'
+                }, {
+                    loader: 'babel-loader',
+                    options: {
+                        babelrc: false,
+                        presets: [
+                            'es2015',
+                            'stage-1',
+                            'react'
+                        ]
+                    }
+                }],
+                exclude: /node_modules/
+            },
+            {
+                test: /.css$/,
+                loader: ['style-loader', 'css-loader']
+            }
+        ]
+    },
+    externals: {
+        // Use external version of React
+        "react": "React",
+        "react-dom": "ReactDOM"
+    },
+    devServer: {
+        // Enable history API fallback so HTML5 History API based
+        // routing works. Good for complex setups.
+        historyApiFallback: true,
+
+        // Display only errors to reduce the amount of output.
+        stats: 'errors-only',
+        hot: true,
+        inline: true,
+        contentBase: path.join(__dirname, "public"),
+        // Parse host and port from env to allow customization.
+        //
+        // If you use Docker, Vagrant or Cloud9, set
+        // host: options.host || '0.0.0.0';
+        //
+        // 0.0.0.0 is available to all network devices
+        // unlike default `localhost`.
+        host: '0.0.0.0', // Defaults to `localhost`
+        port: 9000, // Defaults to 8080
+    }
+},{
+    entry: {
         app: './server.js'
     },
     output: {
@@ -33,34 +98,4 @@ module.exports = [{
     },
     target: 'node', // in order to ignore built-in modules like path, fs, etc.
     externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
-},{
-    entry: {
-        app: './app.js'
-    },
-    output: {
-        path: path.resolve(__dirname, 'public'),
-        filename: 'app.js'
-    },
-    context: path.resolve(__dirname, './src/client'),
-    module: {
-        loaders: [
-            {
-                test: /.jsx?$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    presets: ['es2015', 'react']
-                }
-            },
-            {
-                test: /.css$/,
-                loader: ['style-loader', 'css-loader']
-            }
-        ]
-    },
-    externals: {
-        // Use external version of React
-        "react": "React",
-        "react-dom": "ReactDOM"
-    },
 }];

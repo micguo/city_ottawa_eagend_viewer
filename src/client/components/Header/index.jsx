@@ -1,11 +1,17 @@
 import React from 'react';
+import Drawer from './Drawer/index.jsx';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import CSS from './style.css';
 
-let appHeader = React.createClass({
-    render: function(){
+export default class appHeader extends React.Component {
+    render() {
         return (
-            <h1>Ottawa eAgenda</h1>
+            <div>
+                <MuiThemeProvider>
+                    <Drawer menuItems={this.props.menuItems}/>
+                </MuiThemeProvider>
+                <h1 id="title">Ottawa eAgenda</h1>
+            </div>
         );
     }
-});
-
-export default appHeader;
+}

@@ -4,6 +4,10 @@ body {
 }
 
 #body-content {
-    width: 90%;
+    width: 98%;
     margin: auto;
+}
+
+.button {
+    cursor: pointer;
 }
