@@ -9,7 +9,8 @@ module.exports = [{
     },
     output: {
         path: path.resolve(__dirname, 'public'),
-        filename: 'app.js'
+        filename: 'app.js',
+        publicPath: '/'
     },
     context: path.resolve(__dirname, './src/client'),
     resolve: {
@@ -45,9 +46,17 @@ module.exports = [{
     },
     externals: {
         // Use external version of React
-        "react": "React",
-        "react-dom": "ReactDOM"
+        // "react": "React",
+        // "react-dom": "ReactDOM"
     },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        // enable HMR globally
+        new webpack.NamedModulesPlugin(),
+        // prints more readable module names in the browser console on HMR updates
+        new webpack.NoEmitOnErrorsPlugin(),
+        // do not emit compiled assets that include errors
+    ],
     devServer: {
         // Enable history API fallback so HTML5 History API based
         // routing works. Good for complex setups.
@@ -58,6 +67,7 @@ module.exports = [{
         hot: true,
         inline: true,
         contentBase: path.join(__dirname, "public"),
+        publicPath: '/',
         // Parse host and port from env to allow customization.
         //
         // If you use Docker, Vagrant or Cloud9, set

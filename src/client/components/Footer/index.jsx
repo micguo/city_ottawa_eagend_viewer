@@ -1,11 +1,9 @@
 import React from 'react';
 
-let appFooter = React.createClass({
-    render: function(){
+export default class appFooter extends React.Component{
+    render() {
         return (
             <div>Developed by Hao Guo</div>
         );
     }
-});
-
-export default appFooter;
+};

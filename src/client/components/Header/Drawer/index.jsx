@@ -4,7 +4,8 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import FontIcon from 'material-ui/FontIcon';
 import CSS from './style.css';
-
+import injectTapEventPlugin from 'react-tap-event-plugin'
+injectTapEventPlugin();
 
 export default class DrawerSimpleExample extends React.Component {
 
@@ -34,11 +35,11 @@ export default class DrawerSimpleExample extends React.Component {
                 <Drawer open={this.state.open}>
                     <h1>Ottawa eAgenda</h1>
                     <Menu value={this.state.selectedMenuItem} multiple={false}>
-                    {
-                        this.props.menuItems.map((menuItem, index) => {
-                            return <MenuItem onClick={() => {this.handleMenuChange(index)}} value={index} primaryText={menuItem.title}/>;
-                        })
-                    }
+                        {
+                            this.props.menuItems.map((menuItem, index) => {
+                                return <MenuItem key={index} onClick={() => {this.handleMenuChange(index)}} value={index} primaryText={menuItem.title}/>;
+                            })
+                        }
                     </Menu>
                 </Drawer>
             </div>
