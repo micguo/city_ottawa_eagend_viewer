@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter, Route, Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import Drawer from 'material-ui/Drawer';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
@@ -18,16 +18,9 @@ class DrawerSimpleExample extends React.Component {
 
     handleToggle = () => this.setState({open: !this.state.open});
 
-    handleMenuChange = function(value) {
+    handleMenuChange = function(value, menuItem) {
         this.setState({selectedMenuItem: value});
-        switch (value) {
-            case 0:
-                this.props.history.push('/meetings');
-                break;
-            case 1:
-                this.props.history.push('/about');
-                break;
-        }
+        this.props.history.push(menuItem.uri);
     };
 
     render() {
@@ -43,15 +36,11 @@ class DrawerSimpleExample extends React.Component {
                     <Menu value={this.state.selectedMenuItem} multiple={false}>
                         {
                             this.props.menuItems.map((menuItem, index) => {
-                                return <MenuItem key={index} onClick={() => {this.handleMenuChange(index)}} value={index} primaryText={menuItem.title}/>;
+                                return <MenuItem key={index} onClick={() => {this.handleMenuChange(index, menuItem)}} value={index} primaryText={menuItem.title}/>;
                             })
                         }
                     </Menu>
                 </Drawer>
-                <Link to="/meetings">Meetings</Link>
-                <Link to="about">About</Link>
-                <Route path="/meetings" render={() => (<div>meeting</div>)} />
-                <Route path="/about" render={() => (<div>about</div>)} />
             </div>
         );
     }
