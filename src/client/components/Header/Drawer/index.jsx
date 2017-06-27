@@ -1,13 +1,12 @@
 import React from 'react';
+import {withRouter, Route, Link} from 'react-router-dom'
 import Drawer from 'material-ui/Drawer';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import FontIcon from 'material-ui/FontIcon';
 import CSS from './style.css';
-import injectTapEventPlugin from 'react-tap-event-plugin'
-injectTapEventPlugin();
 
-export default class DrawerSimpleExample extends React.Component {
+class DrawerSimpleExample extends React.Component {
 
     constructor(props) {
         super(props);
@@ -20,8 +19,15 @@ export default class DrawerSimpleExample extends React.Component {
     handleToggle = () => this.setState({open: !this.state.open});
 
     handleMenuChange = function(value) {
-        this.state.selectedMenuItem = value;
-        console.log(this.state);
+        this.setState({selectedMenuItem: value});
+        switch (value) {
+            case 0:
+                this.props.history.push('/meetings');
+                break;
+            case 1:
+                this.props.history.push('/about');
+                break;
+        }
     };
 
     render() {
@@ -42,7 +48,13 @@ export default class DrawerSimpleExample extends React.Component {
                         }
                     </Menu>
                 </Drawer>
+                <Link to="/meetings">Meetings</Link>
+                <Link to="about">About</Link>
+                <Route path="/meetings" render={() => (<div>meeting</div>)} />
+                <Route path="/about" render={() => (<div>about</div>)} />
             </div>
         );
     }
 }
+
+export default withRouter(DrawerSimpleExample)
