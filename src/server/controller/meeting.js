@@ -20,13 +20,27 @@ router.post('/', function(req, res) {
         }
     });
 })
-.get('/', function(reg, res) {
-    Meeting.find(function(err, meetings) {
-        if (err) {
-            res.send(err);
-        }
-        res.json(meetings);
-    })
+.get('/', function(req, res) {
+    let pageSize = 10;
+    let page = Math.max(0, (req.param('page') === undefined) ? 0 : req.param('page'));
+    Meeting.find()
+        .limit(pageSize)
+        .skip(pageSize * page)
+        .sort({
+            date: 'desc'
+        })
+        .exec(function(err, meetings) {
+            if (err) {
+                res.send(err);
+            }
+            Meeting.count().exec(function(err, count){
+                res.json({
+                    data: meetings,
+                    page: page,
+                    pages: Math.floor(count / pageSize)
+                });
+            });
+        })
 });
 
 export default router;

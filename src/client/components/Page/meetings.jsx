@@ -1,5 +1,6 @@
 import React from 'react';
 import setting from 'setting.json';
+import Pager from '../Pager/index.jsx';
 
 export default class Meetings extends React.Component {
     constructor(props) {
@@ -26,7 +27,7 @@ export default class Meetings extends React.Component {
             .then((resp) => resp.json()) // Transform the data into json
             .then((data) => {
                 console.log(data);
-                this.setState({meetings: data});
+                this.setState({meetings: data.data});
             })
     }
 
@@ -39,6 +40,7 @@ export default class Meetings extends React.Component {
                         <div>{(new Date(meeting.date)).toLocaleDateString()}</div>
                     </div>
                 )}
+                <Pager/>
             </div>
         );
     }
