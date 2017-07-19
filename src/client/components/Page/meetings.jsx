@@ -40,7 +40,8 @@ export default class Meetings extends React.Component {
                         <div>{(new Date(meeting.date)).toLocaleDateString()}</div>
                     </div>
                 )}
-                <Pager/>
+                {/*<div>THIS IS NOT CORRECT WE WILL SET STATE.CURRENTPAGE</div>>*/}
+                <Pager pageSize="10" totalItems={this.state.meetings.length} currentPage="0"/>
             </div>
         );
     }
