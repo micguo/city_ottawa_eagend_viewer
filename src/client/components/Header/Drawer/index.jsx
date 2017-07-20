@@ -20,6 +20,7 @@ class DrawerSimpleExample extends React.Component {
 
     handleMenuChange = function(value, menuItem) {
         this.setState({selectedMenuItem: value});
+        // high order withRouter has props.history
         this.props.history.push(menuItem.uri);
     };
 

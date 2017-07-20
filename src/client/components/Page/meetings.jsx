@@ -26,8 +26,7 @@ export default class Meetings extends React.Component {
         meetingFetchingPromise
             .then((resp) => resp.json()) // Transform the data into json
             .then((data) => {
-                console.log(data);
-                this.setState({meetings: data.data});
+                this.setState({meetings: data.data, totalPages: data.pages, currentPage: data.page});
             })
     }
 
@@ -41,7 +40,7 @@ export default class Meetings extends React.Component {
                     </div>
                 )}
                 {/*<div>THIS IS NOT CORRECT WE WILL SET STATE.CURRENTPAGE</div>>*/}
-                <Pager pageSize="10" totalItems={this.state.meetings.length} currentPage="0"/>
+                <Pager pageSize="10" totalPages={this.state.totalPages} currentPage="0"/>
             </div>
         );
     }

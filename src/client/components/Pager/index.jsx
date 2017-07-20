@@ -1,38 +1,39 @@
 import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
+import {withRouter} from 'react-router-dom'
 
-export default class Pager extends React.Component {
+class Pager extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            totalPages: Math.floor(parseInt(props.totalItems) / parseInt(props.pageSize)),
-            currentPage: parseInt(props.currentPage)
-        };
     }
 
     componentWillReceiveProps(nextProps)
     {
-        console.log(nextProps);
-
+        let params = new URLSearchParams(location.search);
+//TODO, fix this
+        console.log(        params.get('page'));
         this.setState({
-            totalPages: Math.floor(parseInt(nextProps.totalItems) / parseInt(nextProps.pageSize)),
-            currentPage: parseInt(nextProps.currentPage)
+            currentPage: params.get('page'),
+            totalPages: parseInt(nextProps.totalPages)
         });
     }
 
     handlePrevious = () => {
+        this.props.history.push(location.pathname + '?page=' + (((this.state.currentPage - 1) < 0) ? 0 : (this.state.currentPage - 1)));
         this.setState({currentPage: ((this.state.currentPage - 1) < 0) ? 0 : (this.state.currentPage - 1)});
     };
     handleNext = () => {
-        console.log(this.state);
+        this.props.history.push(location.pathname + '?page=' + (((this.state.currentPage + 1) > this.state.totalPages) ? this.state.totalPages : (this.state.currentPage + 1)));
         this.setState({currentPage: ((this.state.currentPage + 1) > this.state.totalPages) ? this.state.totalPages : (this.state.currentPage + 1)});
     };
     handleFirst = () => {
+        this.props.history.push(location.pathname + '?page=0');
         this.setState({currentPage: 0});
     };
     handleLast = () => {
+        this.props.history.push(location.pathname + '?page=' + this.state.totalPages);
         this.setState({currentPage: this.state.totalPages});
     };
 
@@ -55,3 +56,5 @@ export default class Pager extends React.Component {
         );
     }
 }
+
+export default withRouter(Pager)
