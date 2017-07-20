@@ -1,15 +1,17 @@
 import React from 'react';
 import setting from 'setting.json';
 import Pager from '../Pager/index.jsx';
+import {withRouter} from 'react-router-dom'
 
-export default class Meetings extends React.Component {
+
+class Meetings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {meetings: []};
     }
 
-    getDataPromise() {
-        let url = setting.api + '/api/meeting';
+    getDataPromise(page) {
+        let url = setting.api + '/api/meeting?page=' + page;
         console.log(url);
         let request = new Request(url, {
             method: 'GET',
@@ -30,6 +32,20 @@ export default class Meetings extends React.Component {
             })
     }
 
+
+    componentWillReceiveProps(nextProps)
+    {
+        let params = new URLSearchParams(nextProps.location.search);
+        let meetingFetchingPromise = this.getDataPromise(params.get('page'));
+        meetingFetchingPromise
+            .then((resp) => resp.json()) // Transform the data into json
+            .then((data) => {
+                this.setState({meetings: data.data, totalPages: data.pages, currentPage: data.page});
+            })
+    }
+
+
+
     render() {
         return (
             <div>
@@ -39,9 +55,10 @@ export default class Meetings extends React.Component {
                         <div>{(new Date(meeting.date)).toLocaleDateString()}</div>
                     </div>
                 )}
-                {/*<div>THIS IS NOT CORRECT WE WILL SET STATE.CURRENTPAGE</div>>*/}
                 <Pager pageSize="10" totalPages={this.state.totalPages} currentPage="0"/>
             </div>
         );
     }
 }
+
+export default withRouter(Meetings)

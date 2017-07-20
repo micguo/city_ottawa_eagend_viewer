@@ -11,11 +11,9 @@ class Pager extends React.Component {
 
     componentWillReceiveProps(nextProps)
     {
-        let params = new URLSearchParams(location.search);
-//TODO, fix this
-        console.log(        params.get('page'));
+        let params = new URLSearchParams(nextProps.location.search);
         this.setState({
-            currentPage: params.get('page'),
+            currentPage: parseInt(params.get('page')),
             totalPages: parseInt(nextProps.totalPages)
         });
     }
