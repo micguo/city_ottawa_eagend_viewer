@@ -9,6 +9,19 @@ class Pager extends React.Component {
         super(props);
     }
 
+    componentWillMount = () => {
+        let params = new URLSearchParams(location.search);
+        let page = params.get('page');
+        page = (page !== null) ? page : 0;
+        let newState = {
+            currentPage: parseInt(page),
+            totalPages: parseInt(this.props.totalPages)
+        };
+        console.log(this.props);
+        console.log(newState);
+        this.setState(newState);
+    };
+
     componentWillReceiveProps(nextProps)
     {
         let params = new URLSearchParams(nextProps.location.search);
@@ -20,19 +33,15 @@ class Pager extends React.Component {
 
     handlePrevious = () => {
         this.props.history.push(location.pathname + '?page=' + (((this.state.currentPage - 1) < 0) ? 0 : (this.state.currentPage - 1)));
-        this.setState({currentPage: ((this.state.currentPage - 1) < 0) ? 0 : (this.state.currentPage - 1)});
     };
     handleNext = () => {
         this.props.history.push(location.pathname + '?page=' + (((this.state.currentPage + 1) > this.state.totalPages) ? this.state.totalPages : (this.state.currentPage + 1)));
-        this.setState({currentPage: ((this.state.currentPage + 1) > this.state.totalPages) ? this.state.totalPages : (this.state.currentPage + 1)});
     };
     handleFirst = () => {
         this.props.history.push(location.pathname + '?page=0');
-        this.setState({currentPage: 0});
     };
     handleLast = () => {
         this.props.history.push(location.pathname + '?page=' + this.state.totalPages);
-        this.setState({currentPage: this.state.totalPages});
     };
 
     render() {

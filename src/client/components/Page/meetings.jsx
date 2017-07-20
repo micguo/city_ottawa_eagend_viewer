@@ -12,7 +12,6 @@ class Meetings extends React.Component {
 
     getDataPromise(page) {
         let url = setting.api + '/api/meeting?page=' + page;
-        console.log(url);
         let request = new Request(url, {
             method: 'GET',
             headers: new Headers(),
@@ -23,28 +22,25 @@ class Meetings extends React.Component {
         return fetch(request);
     }
 
-    componentWillMount() {
-        let meetingFetchingPromise = this.getDataPromise();
+    fetchData = () => {
+        let params = new URLSearchParams(location.search);
+        let page = params.get('page');
+        page = (page !== null) ? page : 0;
+        let meetingFetchingPromise = this.getDataPromise(page);
         meetingFetchingPromise
             .then((resp) => resp.json()) // Transform the data into json
             .then((data) => {
                 this.setState({meetings: data.data, totalPages: data.pages, currentPage: data.page});
             })
+    };
+
+    componentWillMount = () => {
+        this.fetchData()
+    };
+
+    componentWillReceiveProps(nextProps) {
+        this.fetchData()
     }
-
-
-    componentWillReceiveProps(nextProps)
-    {
-        let params = new URLSearchParams(nextProps.location.search);
-        let meetingFetchingPromise = this.getDataPromise(params.get('page'));
-        meetingFetchingPromise
-            .then((resp) => resp.json()) // Transform the data into json
-            .then((data) => {
-                this.setState({meetings: data.data, totalPages: data.pages, currentPage: data.page});
-            })
-    }
-
-
 
     render() {
         return (
@@ -55,7 +51,7 @@ class Meetings extends React.Component {
                         <div>{(new Date(meeting.date)).toLocaleDateString()}</div>
                     </div>
                 )}
-                <Pager pageSize="10" totalPages={this.state.totalPages} currentPage="0"/>
+                <Pager totalPages={this.state.totalPages}/>
             </div>
         );
     }
