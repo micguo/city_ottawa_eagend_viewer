@@ -9,7 +9,7 @@ class Pager extends React.Component {
         super(props);
     }
 
-    componentWillMount = () => {
+    updatePageByUrl = () => {
         let params = new URLSearchParams(location.search);
         let page = params.get('page');
         page = (page !== null) ? page : 0;
@@ -17,18 +17,16 @@ class Pager extends React.Component {
             currentPage: parseInt(page),
             totalPages: parseInt(this.props.totalPages)
         };
-        console.log(this.props);
-        console.log(newState);
         this.setState(newState);
+    };
+
+    componentWillMount = () => {
+        this.updatePageByUrl();
     };
 
     componentWillReceiveProps(nextProps)
     {
-        let params = new URLSearchParams(nextProps.location.search);
-        this.setState({
-            currentPage: parseInt(params.get('page')),
-            totalPages: parseInt(nextProps.totalPages)
-        });
+        this.updatePageByUrl();
     }
 
     handlePrevious = () => {
@@ -46,7 +44,7 @@ class Pager extends React.Component {
 
     render() {
         return (
-            <div>
+            <div  className="pager">
                 <IconButton tooltip="First Page" onClick={this.handleFirst}>
                     <FontIcon className="material-icons button menu-button">first_page</FontIcon>
                 </IconButton>

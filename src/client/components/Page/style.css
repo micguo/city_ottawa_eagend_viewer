@@ -1,4 +1,15 @@
 #page-content {
-    width: 80%;
+    width: 70%;
     margin: 0 10px 0 256px;
+
+}
+
+#page-content .content-wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 1000px;
+}
+
+.pager {
+    margin-top: auto;
 }

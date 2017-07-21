@@ -44,7 +44,7 @@ class Meetings extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="content-wrapper">
                 {this.state.meetings.map(meeting =>
                     <div key={meeting.id}>
                         <h2><a target="blank" href={setting.officialEagendaMeetingUrl + meeting.id}>{meeting.title}</a></h2>
