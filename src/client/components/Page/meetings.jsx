@@ -11,7 +11,8 @@ class Meetings extends React.Component {
     }
 
     getDataPromise(page) {
-        let url = setting.api + '/api/meeting?page=' + page;
+        let pageSize = 8;
+        let url = setting.api + '/api/meeting?page=' + page + '&size=' + pageSize;
         let request = new Request(url, {
             method: 'GET',
             headers: new Headers(),
