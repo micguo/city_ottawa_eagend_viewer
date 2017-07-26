@@ -30,13 +30,13 @@ class Pager extends React.Component {
     }
 
     handlePrevious = () => {
-        this.props.history.push(location.pathname + '?page=' + (((this.state.currentPage - 1) < 0) ? 0 : (this.state.currentPage - 1)));
+        this.props.history.push(location.pathname + '?page=' + (((this.state.currentPage - 1) < 1) ? 1 : (this.state.currentPage - 1)));
     };
     handleNext = () => {
         this.props.history.push(location.pathname + '?page=' + (((this.state.currentPage + 1) > this.state.totalPages) ? this.state.totalPages : (this.state.currentPage + 1)));
     };
     handleFirst = () => {
-        this.props.history.push(location.pathname + '?page=0');
+        this.props.history.push(location.pathname + '?page=1');
     };
     handleLast = () => {
         this.props.history.push(location.pathname + '?page=' + this.state.totalPages);

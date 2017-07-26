@@ -22,10 +22,10 @@ router.post('/', function(req, res) {
 })
 .get('/', function(req, res) {
     let pageSize = Math.max(1, (req.param('size') === undefined) ? 10 : req.param('size'));
-    let page = Math.max(0, (req.param('page') === undefined) ? 0 : req.param('page'));
+    let page = Math.max(1, (req.param('page') === undefined) ? 1 : req.param('page'));
     Meeting.find()
         .limit(pageSize)
-        .skip(pageSize * page)
+        .skip(pageSize * (page - 1))
         .sort({
             date: 'desc'
         })
