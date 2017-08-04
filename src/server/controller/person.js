@@ -13,7 +13,7 @@ router.post('/', function(req, res) {
             else
                 res.send(err);
         } else {
-            res.json({message: 'Person created!'});
+            res.json({message: 'Person created!', res: JSON.stringify(req.body)});
         }
     });
 })
