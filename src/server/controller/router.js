@@ -2,6 +2,7 @@
 
 import meetingController from "./meeting";
 import committeeController from "./committee";
+import personController from "./person";
 import crawlerReceiverController from "./crawlerReceiver";
 let express    = require('express');        // call express
 let cors       = require('cors');
@@ -21,6 +22,7 @@ app.use('/api',  express.Router().get('/', function(reg, res) {
 }));
 app.use('/api/meeting', meetingController);
 app.use('/api/committee', committeeController);
+app.use('/api/person', personController);
 app.use('/api/crawler_receiver', crawlerReceiverController);
 
 export default app;
