@@ -1,6 +1,7 @@
 // call the packages we need
 
 import meetingController from "./meeting";
+import committeeController from "./committee";
 import crawlerReceiverController from "./crawlerReceiver";
 let express    = require('express');        // call express
 let cors       = require('cors');
@@ -19,6 +20,7 @@ app.use('/api',  express.Router().get('/', function(reg, res) {
     res.json('Welcome');
 }));
 app.use('/api/meeting', meetingController);
+app.use('/api/committee', committeeController);
 app.use('/api/crawler_receiver', crawlerReceiverController);
 
 export default app;
